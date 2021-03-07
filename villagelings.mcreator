@@ -1,0 +1,39 @@
+{
+  "id_map": {},
+  "mod_elements": [
+    {
+      "name": "V1",
+      "type": "mob",
+      "sortid": 1,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "v_1"
+    }
+  ],
+  "variable_elements": [],
+  "sound_elements": [],
+  "language_map": {
+    "en_us": {
+      "item.villagelings.v_1_spawn_egg": "Defense Villageling Spawn Egg",
+      "entity.villagelings.v_1": "Defense Villageling"
+    }
+  },
+  "workspaceSettings": {
+    "modid": "villagelings",
+    "modName": "Villagelings",
+    "version": "1.0.0",
+    "author": "njtur, MCreator",
+    "websiteURL": "https://mcreator.net",
+    "disableForgeVersionCheck": true,
+    "serverSideOnly": false,
+    "requiredMods": [],
+    "dependencies": [],
+    "dependants": [],
+    "mcreatorDependencies": [],
+    "currentGenerator": "forge-1.15.2",
+    "modElementsPackage": "net.tturbe.villagelings",
+    "lockBaseModFiles": false
+  },
+  "mcreatorVersion": 202000547520
+}
