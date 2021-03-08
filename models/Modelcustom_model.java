@@ -76,7 +76,7 @@ public static class Modelcustom_model extends EntityModel<Entity> {
 		this.Head.rotateAngleY = f3 / (180F / (float) Math.PI);
 		this.Head.rotateAngleX = f4 / (180F / (float) Math.PI);
 		this.LArm.rotateAngleX = MathHelper.cos(f * 0.6662F) * f1;
-		this.SpinnyThing.rotateAngleY = f2 / 20.f;
+		this.SpinnyThing.rotateAngleY = f2;
 		this.RLeg.rotateAngleX = MathHelper.cos(f * 1.0F) * 1.0F * f1;
 		this.RArm.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * f1;
 	}

@@ -9,6 +9,15 @@
       "locked_code": false,
       "ids": {},
       "registry_name": "v_1"
+    },
+    {
+      "name": "Reaper",
+      "type": "mob",
+      "sortid": 2,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "reaper"
     }
   ],
   "variable_elements": [],
@@ -16,7 +25,9 @@
   "language_map": {
     "en_us": {
       "item.villagelings.v_1_spawn_egg": "Defense Villageling Spawn Egg",
-      "entity.villagelings.v_1": "Defense Villageling"
+      "entity.villagelings.reaper": "Reaper Villageling",
+      "entity.villagelings.v_1": "Defense Villageling",
+      "item.villagelings.reaper_spawn_egg": "Reaper Villageling Spawn Egg"
     }
   },
   "workspaceSettings": {

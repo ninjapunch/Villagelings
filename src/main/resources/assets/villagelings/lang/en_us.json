@@ -1,4 +1,6 @@
 {
   "item.villagelings.v_1_spawn_egg": "Defense Villageling Spawn Egg",
-  "entity.villagelings.v_1": "Defense Villageling"
+  "entity.villagelings.reaper": "Reaper Villageling",
+  "entity.villagelings.v_1": "Defense Villageling",
+  "item.villagelings.reaper_spawn_egg": "Reaper Villageling Spawn Egg"
 }

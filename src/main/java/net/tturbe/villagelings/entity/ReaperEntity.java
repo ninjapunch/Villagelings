@@ -18,7 +18,6 @@ import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.World;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.DamageSource;
 import net.minecraft.network.IPacket;
@@ -41,27 +40,25 @@ import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.block.BlockState;
 
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 @VillagelingsModElements.ModElement.Tag
-public class V1Entity extends VillagelingsModElements.ModElement {
+public class ReaperEntity extends VillagelingsModElements.ModElement {
 	public static EntityType entity = null;
-	public V1Entity(VillagelingsModElements instance) {
-		super(instance, 1);
+	public ReaperEntity(VillagelingsModElements instance) {
+		super(instance, 2);
 		FMLJavaModLoadingContext.get().getModEventBus().register(this);
 	}
 
 	@Override
 	public void initElements() {
 		entity = (EntityType.Builder.<CustomEntity>create(CustomEntity::new, EntityClassification.MONSTER).setShouldReceiveVelocityUpdates(true)
-				.setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(CustomEntity::new).size(0.3f, 0.9f)).build("v_1")
-						.setRegistryName("v_1");
+				.setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(CustomEntity::new).size(0.6f, 1.8f)).build("reaper")
+						.setRegistryName("reaper");
 		elements.entities.add(() -> entity);
-		elements.items
-				.add(() -> new SpawnEggItem(entity, -16777216, -1, new Item.Properties().group(ItemGroup.MISC)).setRegistryName("v_1_spawn_egg"));
+		elements.items.add(() -> new SpawnEggItem(entity, -1, -1, new Item.Properties().group(ItemGroup.MISC)).setRegistryName("reaper_spawn_egg"));
 	}
 
 	@Override
@@ -77,10 +74,10 @@ public class V1Entity extends VillagelingsModElements.ModElement {
 	@OnlyIn(Dist.CLIENT)
 	public void registerModels(ModelRegistryEvent event) {
 		RenderingRegistry.registerEntityRenderingHandler(entity, renderManager -> {
-			return new MobRenderer(renderManager, new Modelcustom_model(), 0.25f) {
+			return new MobRenderer(renderManager, new Modelreaper_model(), 0.5f) {
 				@Override
 				public ResourceLocation getEntityTexture(Entity entity) {
-					return new ResourceLocation("villagelings:textures/texture.png");
+					return new ResourceLocation("villagelings:textures/reaper.png");
 				}
 			};
 		});
@@ -119,16 +116,6 @@ public class V1Entity extends VillagelingsModElements.ModElement {
 		}
 
 		@Override
-		public net.minecraft.util.SoundEvent getAmbientSound() {
-			return (net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.villager.ambient"));
-		}
-
-		@Override
-		public void playStepSound(BlockPos pos, BlockState blockIn) {
-			this.playSound((net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.pig.step")), 0.15f, 1);
-		}
-
-		@Override
 		public net.minecraft.util.SoundEvent getHurtSound(DamageSource ds) {
 			return (net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.hurt"));
 		}
@@ -156,58 +143,74 @@ public class V1Entity extends VillagelingsModElements.ModElement {
 	// Made with Blockbench 3.8.0
 	// Exported for Minecraft version 1.15
 	// Paste this class into your mod and generate all required imports
-	public static class Modelcustom_model extends EntityModel<Entity> {
-		private final ModelRenderer WholeBody;
+	public static class Modelreaper_model extends EntityModel<Entity> {
+		private final ModelRenderer all;
 		private final ModelRenderer LArm;
-		private final ModelRenderer RLeg;
-		private final ModelRenderer LLeg;
-		private final ModelRenderer RArm;
+		private final ModelRenderer Spinnything2;
+		private final ModelRenderer spin2;
 		private final ModelRenderer Head;
-		private final ModelRenderer SpinnyThing;
-		public Modelcustom_model() {
+		private final ModelRenderer RArm;
+		private final ModelRenderer Spinnything;
+		private final ModelRenderer spin;
+		private final ModelRenderer LLeg;
+		private final ModelRenderer Torso;
+		private final ModelRenderer RLeg;
+		public Modelreaper_model() {
 			textureWidth = 32;
 			textureHeight = 32;
-			WholeBody = new ModelRenderer(this);
-			WholeBody.setRotationPoint(3.0F, 15.0F, 1.5F);
-			WholeBody.setTextureOffset(0, 0).addBox(-5.0F, -1.0F, -1.5F, 4.0F, 5.0F, 3.0F, 0.0F, false);
+			all = new ModelRenderer(this);
+			all.setRotationPoint(0.0F, 29.0F, 0.0F);
 			LArm = new ModelRenderer(this);
-			LArm.setRotationPoint(0.0F, 0.0F, 0.0F);
-			WholeBody.addChild(LArm);
-			LArm.setTextureOffset(8, 20).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 5.0F, 2.0F, 0.0F, false);
-			LArm.setTextureOffset(18, 12).addBox(-0.5F, 3.25F, -0.5F, 1.0F, 1.0F, 1.0F, 0.0F, false);
-			RLeg = new ModelRenderer(this);
-			RLeg.setRotationPoint(-4.0F, 4.5F, 0.0F);
-			WholeBody.addChild(RLeg);
-			RLeg.setTextureOffset(0, 17).addBox(-1.0F, -0.5F, -1.0F, 2.0F, 5.0F, 2.0F, 0.0F, false);
-			LLeg = new ModelRenderer(this);
-			LLeg.setRotationPoint(-2.0F, 4.5F, 0.0F);
-			WholeBody.addChild(LLeg);
-			LLeg.setTextureOffset(12, 13).addBox(-1.0F, -0.5F, -1.0F, 2.0F, 5.0F, 2.0F, 0.0F, false);
-			RArm = new ModelRenderer(this);
-			RArm.setRotationPoint(-6.0F, 0.0F, 0.0F);
-			WholeBody.addChild(RArm);
-			RArm.setTextureOffset(18, 18).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 5.0F, 2.0F, 0.0F, false);
-			RArm.setTextureOffset(9, 13).addBox(-0.5F, 3.25F, -0.5F, 1.0F, 1.0F, 1.0F, 0.0F, false);
+			LArm.setRotationPoint(3.0F, -14.0F, 1.5F);
+			all.addChild(LArm);
+			LArm.setTextureOffset(18, 18).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 5.0F, 2.0F, 0.0F, false);
+			LArm.setTextureOffset(20, 0).addBox(-0.5F, 3.25F, -0.5F, 1.0F, 1.0F, 1.0F, 0.0F, false);
+			Spinnything2 = new ModelRenderer(this);
+			Spinnything2.setRotationPoint(-8.0F, 2.25F, 0.0F);
+			LArm.addChild(Spinnything2);
+			Spinnything2.setTextureOffset(8, 15).addBox(9.0F, 0.5F, -0.5F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+			spin2 = new ModelRenderer(this);
+			spin2.setRotationPoint(9.0F, 4.0F, 0.0F);
+			Spinnything2.addChild(spin2);
+			spin2.setTextureOffset(11, 19).addBox(-0.5F, -1.5F, -0.5F, 1.0F, 3.0F, 1.0F, 0.0F, false);
 			Head = new ModelRenderer(this);
-			Head.setRotationPoint(-3.0F, -1.0F, 0.0F);
-			WholeBody.addChild(Head);
-			Head.setTextureOffset(14, 2).addBox(1.0F, -3.0F, -0.5F, 1.0F, 2.0F, 1.0F, 0.0F, false);
-			Head.setTextureOffset(18, 1).addBox(-0.5F, -1.5F, -2.5F, 1.0F, 2.0F, 1.0F, 0.0F, false);
-			Head.setTextureOffset(8, 17).addBox(-2.0F, -3.0F, -0.5F, 1.0F, 2.0F, 1.0F, 0.0F, false);
-			Head.setTextureOffset(12, 5).addBox(-1.5F, -4.0F, -1.5F, 3.0F, 4.0F, 3.0F, 0.0F, false);
-			Head.setTextureOffset(0, 8).addBox(-2.0F, -4.5F, -2.0F, 4.0F, 1.0F, 4.0F, 0.0F, false);
-			Head.setTextureOffset(0, 13).addBox(-1.5F, -5.0F, -1.5F, 3.0F, 1.0F, 3.0F, 0.0F, false);
-			SpinnyThing = new ModelRenderer(this);
-			SpinnyThing.setRotationPoint(0.0F, -5.5F, 0.0F);
-			Head.addChild(SpinnyThing);
-			SpinnyThing.setTextureOffset(0, 8).addBox(-0.5F, -1.25F, -0.5F, 1.0F, 2.0F, 1.0F, 0.0F, false);
-			SpinnyThing.setTextureOffset(11, 0).addBox(-1.5F, -2.25F, -0.5F, 3.0F, 1.0F, 1.0F, 0.0F, false);
+			Head.setRotationPoint(0.0F, -15.125F, 1.5F);
+			all.addChild(Head);
+			Head.setTextureOffset(20, 14).addBox(1.0F, -2.875F, -0.5F, 1.0F, 2.0F, 1.0F, 0.0F, false);
+			Head.setTextureOffset(18, 11).addBox(-2.0F, -2.875F, -0.5F, 1.0F, 2.0F, 1.0F, 0.0F, false);
+			Head.setTextureOffset(9, 8).addBox(-0.5F, -1.375F, -2.5F, 1.0F, 2.0F, 1.0F, 0.0F, false);
+			Head.setTextureOffset(0, 8).addBox(-1.5F, -3.875F, -1.5F, 3.0F, 4.0F, 3.0F, 0.0F, false);
+			RArm = new ModelRenderer(this);
+			RArm.setRotationPoint(-3.0F, -14.0F, 1.5F);
+			all.addChild(RArm);
+			RArm.setTextureOffset(0, 15).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 5.0F, 2.0F, 0.0F, false);
+			RArm.setTextureOffset(11, 0).addBox(-0.5F, 3.25F, -0.5F, 1.0F, 1.0F, 1.0F, 0.0F, false);
+			Spinnything = new ModelRenderer(this);
+			Spinnything.setRotationPoint(-2.0F, 2.25F, 0.0F);
+			RArm.addChild(Spinnything);
+			Spinnything.setTextureOffset(13, 7).addBox(0.0F, 0.5F, -0.5F, 1.0F, 4.0F, 1.0F, 0.0F, false);
+			spin = new ModelRenderer(this);
+			spin.setRotationPoint(1.0F, 4.0F, 0.0F);
+			Spinnything.addChild(spin);
+			spin.setTextureOffset(17, 7).addBox(-0.5F, -1.5F, -0.5F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+			LLeg = new ModelRenderer(this);
+			LLeg.setRotationPoint(1.0F, -10.0F, 1.5F);
+			all.addChild(LLeg);
+			LLeg.setTextureOffset(14, 0).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 5.0F, 2.0F, 0.0F, false);
+			Torso = new ModelRenderer(this);
+			Torso.setRotationPoint(0.0F, 0.0F, 0.0F);
+			all.addChild(Torso);
+			Torso.setTextureOffset(0, 0).addBox(-2.0F, -15.0F, 0.0F, 4.0F, 5.0F, 3.0F, 0.0F, false);
+			RLeg = new ModelRenderer(this);
+			RLeg.setRotationPoint(-1.0F, -10.0F, 1.5F);
+			all.addChild(RLeg);
+			RLeg.setTextureOffset(12, 12).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 5.0F, 2.0F, 0.0F, false);
 		}
 
 		@Override
 		public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue,
 				float alpha) {
-			WholeBody.render(matrixStack, buffer, packedLight, packedOverlay);
+			all.render(matrixStack, buffer, packedLight, packedOverlay);
 		}
 
 		public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
@@ -221,7 +224,8 @@ public class V1Entity extends VillagelingsModElements.ModElement {
 			this.Head.rotateAngleY = f3 / (180F / (float) Math.PI);
 			this.Head.rotateAngleX = f4 / (180F / (float) Math.PI);
 			this.LArm.rotateAngleX = MathHelper.cos(f * 0.6662F) * f1;
-			this.SpinnyThing.rotateAngleY = f2;
+			this.spin.rotateAngleX = f2;
+			this.spin2.rotateAngleX = f2;
 			this.RLeg.rotateAngleX = MathHelper.cos(f * 1.0F) * 1.0F * f1;
 			this.RArm.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * f1;
 		}
